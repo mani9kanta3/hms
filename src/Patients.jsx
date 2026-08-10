@@ -18,7 +18,7 @@ function Patients() {
     async function fetchData() {
         try {
             let response = await axios.get('https://doc-back.onrender.com/patients')
-            console.log(response.data);
+            // console.log(response.data);
             setPatients(response.data);
         }
         catch (error) {
@@ -40,6 +40,7 @@ function Patients() {
         patientinfo.weight.includes(query)
     })
     return (
+        <>
         <div>
             <center>
                 <input type="text" placeholder='Search Patients Details'
@@ -69,6 +70,7 @@ function Patients() {
                         </>)
             }
         </div>
+        </>
     )
 }
 
