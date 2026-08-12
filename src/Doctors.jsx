@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 function Doctors() {
     const [doctors,setDoctors]=useState([])
@@ -57,6 +58,7 @@ function Doctors() {
                                 <h3>Gender: {v.gender}</h3>
                                 <h3>Age: {v.age}</h3>
                                 <h3>Specialization: {v.specialization}</h3>
+                                <Link to={`/doctors/${v.id}`}>View Doctors</Link>
                             </div>
                         ))
                     }
