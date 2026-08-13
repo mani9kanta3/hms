@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import './App.css'
 import { Link } from 'react-router-dom'
+import useFetch from './useFetch'
 
 function Patients() {
-    const [patients, setPatients] = useState([])
+    //https://doc-back.onrender.com/patients
+    const{data,load,error}=useFetch('https://doc-back.onrender.com/patients')
     const [search, setSearch]=useState('')
     const [deBouncing,setDebouncingSearch]=useState('')
     //setTimeout(500-search to get),cleartimeout(function clear) -time -no.of API
@@ -16,22 +18,8 @@ function Patients() {
         return ()=>clearTimeout(trigger)
     },[search])
 
-    async function fetchData() {
-        try {
-            let response = await axios.get('https://doc-back.onrender.com/patients')
-            // console.log(response.data);
-            setPatients(response.data);
-        }
-        catch (error) {
-            console.log(error);
-        }
-        finally {
-            console.log('At end');
-        }
-    }
-    useEffect(() => { fetchData() }, [])
 
-    const filterPatients = patients.filter((patientinfo) => {
+    const filterPatients = data.filter((patientinfo) => {
         let query=deBouncing.toLowerCase(search)
         return patientinfo.name.toLowerCase().includes(query.toLowerCase()) ||
         patientinfo.doctor?.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -49,7 +37,7 @@ function Patients() {
                 onChange={(e)=>setSearch(e.target.value)} />
             </center>
             {
-                patients.length === 0 ?
+                data.length === 0 ?
                     (<>
                         <h1>Patients Data not available</h1></>) :
                     (<>
